@@ -1,0 +1,97 @@
+@import url(https://fonts.googleapis.com/css?family=Dancing+Script);
+#card_samples {
+  position: relative;
+  height: 450px;
+  width: 800px;
+  margin: 0 auto;
+}
+#card_samples .title {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  color: #D07700;
+  font-family: "Dancing Script", cursive;
+  font-size: 36px;
+  font-weight: bold;
+  text-decoration: underline;
+}
+#card_samples .caption {
+  display: none;
+  position: absolute;
+  right: 22px;
+  bottom: 20px;
+  max-width: 400px;
+  text-align: center;
+  background: #FFECC3;
+  color: #915700;
+  padding: 5px;
+  border-radius: 5px;
+  font-family: "Lora", Times, serif;
+  font-size: 13px;
+  border: 2px solid #915700;
+  box-shadow: 2px 2px 0px #915700;
+}
+#card_samples img {
+  position: absolute;
+  width: 200px;
+  height: 270px;
+  transition: all 0.5s ease;
+  opacity: 1;
+  border-radius: 15px;
+  box-shadow: 0 0 5px #000;
+}
+#card_samples img:nth-of-type(1) {
+  left: 60px;
+  bottom: 40px;
+  transform: rotate(-34deg);
+}
+#card_samples img:nth-of-type(2) {
+  left: 57px;
+  bottom: 45px;
+  transform: rotate(-22deg);
+}
+#card_samples img:nth-of-type(3) {
+  left: 55px;
+  bottom: 50px;
+  transform: rotate(-35deg);
+}
+#card_samples img:nth-of-type(4) {
+  left: 35px;
+  bottom: 50px;
+  transform: rotate(-40deg);
+}
+#card_samples img:nth-of-type(5) {
+  left: 40px;
+  bottom: 45px;
+  transform: rotate(-25deg);
+}
+#card_samples.spread img:nth-of-type(1) {
+  left: 60px;
+  bottom: 65px;
+  transform: rotate(-45deg);
+}
+#card_samples.spread img:nth-of-type(2) {
+  left: 160px;
+  bottom: 115px;
+  transform: rotate(-30deg);
+}
+#card_samples.spread img:nth-of-type(3) {
+  left: 260px;
+  bottom: 135px;
+  transform: rotate(-15deg);
+}
+#card_samples.spread img:nth-of-type(4) {
+  left: 360px;
+  bottom: 125px;
+  transform: rotate(0deg);
+}
+#card_samples.spread img:nth-of-type(5) {
+  left: 460px;
+  bottom: 95px;
+  transform: rotate(15deg);
+}
+#card_samples.spread img:hover {
+  transform: rotate(0) scale(1.25) !important;
+  z-index: +5;
+  box-shadow: 0 0 25px #000;
+}
