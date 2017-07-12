@@ -18,6 +18,12 @@ from statistics import mean
 app = Flask(__name__)
 #creo array di lettere per la session_key
 lettere = ['a','b','c','d','e','f','g','h','i','l','r','s','t','u','w','z','1','2','3','4','5','6','7']
+class Annuncio():
+'''
+Classificazione annuncio credibilita
+'''
+	Annuncio.ranking = 0
+
 #reindirizza alla home
 @app.route('/', methods = ['POST','GET'])
 @app.route('/index', methods = ['POST','GET'])
@@ -108,11 +114,40 @@ def subito():
 
             except IndexError:
                 ancoraannunci = z
-        output = ''
-        for titolo in titolisubito:
-            output += titolo
-        return output
-
+        for z in range(1, ancoraannunci):
+		try:	
+			#parole pericolose
+			titoloannuncio = titolisubito[z].lower()
+			titoloannuncio = Annuncio()
+			if titoloannuncio.find('cover') == -1 or titoloannuncio.find('carica') == -1 or titoloannuncio.find('custodia') == -1:
+				if ricerca.find('cover') == -1 or ricerca.find('carica') == -1 or ricerca.find('custodia') == -1:
+					titoloannuncio.ranking = titoloannuncio.ranking - 10
+				else:
+					#keyword presente nella ricerca
+					titoloannuncio.ranking = titoloannuncio.ranking + 1
+					pass
+			if titoloannuncio.find('alimentatore') == -1 or titoloannuncio.find('effetto') == -1 or titoloannuncio.find('adattatori') == -1:
+				if ricerca.find('alimentatore') == -1 or ricerca.find('effetto') == -1 or ricerca.find('adattatori') == -1:
+					titoloannuncio.ranking = titoloannuncio.ranking - 10
+				else:
+					#keyword presente nella ricerca
+					titoloannuncio.ranking = titoloannuncio.ranking + 1
+					pass
+			#parole dannose
+			if titoloannuncio.find('non funziona') == -1 or titoloannuncio.find('rotto') == -1 or titoloannuncio.find('danneggiato') == -1:
+				titoloannuncio.ranking = titoloannuncio.ranking - 20
+			#parole buone
+			if titoloannuncio.find('funziona') == -1 or titoloannuncio.find('ram') == -1 or titoloannuncio.find('nuovo') == -1:
+				titoloannuncio.ranking = titoloannuncio.ranking + 10
+			if titoloannuncio.find('sigillato') == -1
+		
+			#DA FINIRE
+			#HO IL CUORE A META, GIA ALLA MIA ETA.
+						
+			
+			
+		except IndexError, Exception:
+		
 
 
 if __name__ == '__main__':
