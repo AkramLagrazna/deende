@@ -11,36 +11,21 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 import random, requests, time
 from string import replace, strip
-from datetime import datetime, timedelta
+import datetime
+from datetime import  timedelta
 from statistics import mean
-#finito importi
-#creo applicazione Flask
 app = Flask(__name__)
-#creo array di lettere per la session_key
 lettere = ['a','b','c','d','e','f','g','h','i','l','r','s','t','u','w','z','1','2','3','4','5','6','7']
 class Annuncio():
-'''
-Classificazione annuncio credibilita
-'''
-	Annuncio.ranking = 0
-
+    def __init__(self, ranking):
+        self.ranking = int(ranking )
 #reindirizza alla home
 @app.route('/', methods = ['POST','GET'])
 @app.route('/index', methods = ['POST','GET'])
 def subito():
-    #creo session key
-    random_lets = ['','','','','','','','','','','','','','','','','','','']
-    vari = 10
-    for x in range(1,vari):
-        try:
-            random_lets[x] = random.choice(lettere)
-            
-        except IndexError:
-            vari = x
-    session_key = ''.join(random_lets)
-    #reindirizza la richiesta se è in GET
+    #reindirizza la richiesta se e in GET
     if request.method == 'GET':
-        ora = datetime.now()
+        ora = datetime.datetime.now()
         return render_template('index.html')
     #reindirizza la richiesta se è in POST
     if request.method == 'POST':
@@ -61,94 +46,124 @@ def subito():
         #json della risposta
         giaison = first_connection.json()
         #ho già costruito un api che fa da scraper su subito.it , ora mi devo solo connettere
-        response = requests.post("https://wrapapi.com/use/lagra/subitoapi/request_1/0.0.2", json={
+        response = requests.post("https://wrapapi.com/use/lagra/subitoparse/parsubito/0.0.2", json={
           "wrapAPIKey": "vlOBFonN6t5xK5wQco5dXZ3NWnKzugH8",
           "regione" : regione,
           "ricerca" : ricerca,
         })
         #json della richiesta dello scraper di subito.it
         json = response.json()
-        #ora si presenta un problema
-        #nel json la data viene rappresentata dal giorno, e poi dall'ora
-        #quindi devo scrivere del codice per convertirlo in orario supportato da python
         annuncii = 30
+        orarisubi = ''
+        prezzisubi = ''
+        titolosubi = ''
+        postosubi = ''
         for x in range(1,annuncii):
             try:
-                data = json['data']['quando'][x]['quandi']
+                data = json['data']['quandi'][x]['quando']
+                prezzo = json['data']['prezzi'][x]['prezzo']
+                titolo = json['data']['titoli'][x]['titolo']
+                dove = json['data']['dovi'][x]['dove']
                 giorna = []
                 for i in xrange(4):
                     giorna += data[i]
                 #il risultato di giorno sarà 'Ieri' o 'Oggi'
                 giorno = ''.join(giorna)
-                if giorno == 'Ieri':
-                    orari = []
-                    for p in range(6,11):
-                        #prendo solo l'orario
-                        orari += data[p]
-                    orariooo = ''.join(orari)
-                    orarii = datetime.strptime(orariooo, '%H:%M').time()
-                    giornata = datetime.today() - timedelta(days=1)
-                    dataseria = datetime.combine(giornata, orarii)
-                    date[x] = dataseria
+#                if giorno == 'Ieri':
+#                    for p in range(6,11):
+#                        #prendo solo l'orario
+#                        orari += data[p]
+#                    orariooo = ''.join(orari)
                 if giorno == 'Oggi':
-                    orari = []
                     for p in range(6,11):
                         #stessa cosa
-                        orari += data[p]
-                    orariooo = ''.join(orari)
-                    orarii = datetime.strptime(orariooo, '%H:%M').time()
-                    giornata = datetime.today()
-                    dataseria = datetime.combine(giornata, orarii)
-                    date[x] = dataseria
+                        orarisubi += data[p]
+                    orarisubi += ';'
+                    prezzisubi += prezzo
+                    prezzisubi += ';'
+                    titolosubi += titolo
+                    titolosubi += ';'
+                    postosubi += dove
+                    postosubi += ';'
             except IndexError:
                 annuncii = x
-        #ora aggiunge ad  un array tutte le date per ordine di annuncio
-        ancoraannunci = 30
-        for z in range(1,ancoraannunci):
+        #strippare prezzi e creare array per tutti i fattori dell'annuncio
+        #.split per fare arrays
+        prezzisubii = prezzisubi.replace("€", "")
+        prezzisubit = prezzisubii.replace(" ", "")
+        #creato array prezzi subito
+        prezzisubitoo = prezzisubit.replace(".", "")
+        prezzisubito = prezzisubitoo.split(';')
+        titolosubito = prezzisubi.split(';')
+        postosubito = postosubi.split(';')
+        orarisubito = orarisubi.split(';')
+        #creare la stessa cosa per kijiji
+        risposta = requests.post("https://wrapapi.com/use/lagra/italiakijiji/parser/0.0.1", json={
+          "wrapAPIKey": "vlOBFonN6t5xK5wQco5dXZ3NWnKzugH8",
+          "regione" : regione,
+          "ricerca" : ricerca,
+        })
+        #json della richiesta dello scraper di subito.it
+        jsonn = risposta.json()
+        annuncii = 30
+        orarikiji = ''
+        prezzikiji = ''
+        titolokiji = ''
+        postokiji = ''
+        for x in range(1,annuncii):
             try:
-                titolisubito[z] = json['data']['titoli'][z]['titolo']
-                prezzisubito[z] = json['data']['prezzo'][z]['prezzi']
-                fotosubito[z] = json['data']['collection'][z]['output']
-                postosubito[z] = json['data']['citta'][z]['dove']
-                annunciosubito[z] = str(titolisubito[z]) + ',' + str(prezzisubito[z]) + ',' + str(fotosubito[z]) + ',' + str(postosubito[z])
-
+                data = jsonn['data']['quando'][x]['data']
+                #if data.find('tatta') == -1:
+                #    pass
+                prezzo = jsonn['data']['prezzi'][x]['prezzo']
+                titolo = jsonn['data']['titoli'][x]['titolo']
+                dove = jsonn['data']['dovi'][x]['dove']
+                giorna = []
+                for i in xrange(4):
+                    giorna += data[i]
+                #il risultato di giorno sarà 'Ieri' o 'Oggi'
+                giorno = ''.join(giorna)
+#                if giorno == 'Ieri':
+#                    for p in range(6,11):
+#                        #prendo solo l'orario
+#                        orari += data[p]
+#                    orariooo = ''.join(orari)
+                if giorno == 'Oggi':
+                    for p in range(6,11):
+                        #stessa cosa
+                        orarikiji += data[p]
+                    orarikiji += ';'
+                    prezzikiji += prezzo
+                    prezzikiji += ';'
+                    titolokiji += titolo
+                    titolokiji += ';'
+                    postokiji += dove
+                    postokiji += ';'
             except IndexError:
-                ancoraannunci = z
-        for z in range(1, ancoraannunci):
-		try:	
-			#parole pericolose
-			titoloannuncio = titolisubito[z].lower()
-			titoloannuncio = Annuncio()
-			if titoloannuncio.find('cover') == -1 or titoloannuncio.find('carica') == -1 or titoloannuncio.find('custodia') == -1:
-				if ricerca.find('cover') == -1 or ricerca.find('carica') == -1 or ricerca.find('custodia') == -1:
-					titoloannuncio.ranking = titoloannuncio.ranking - 10
-				else:
-					#keyword presente nella ricerca
-					titoloannuncio.ranking = titoloannuncio.ranking + 1
-					pass
-			if titoloannuncio.find('alimentatore') == -1 or titoloannuncio.find('effetto') == -1 or titoloannuncio.find('adattatori') == -1:
-				if ricerca.find('alimentatore') == -1 or ricerca.find('effetto') == -1 or ricerca.find('adattatori') == -1:
-					titoloannuncio.ranking = titoloannuncio.ranking - 10
-				else:
-					#keyword presente nella ricerca
-					titoloannuncio.ranking = titoloannuncio.ranking + 1
-					pass
-			#parole dannose
-			if titoloannuncio.find('non funziona') == -1 or titoloannuncio.find('rotto') == -1 or titoloannuncio.find('danneggiato') == -1:
-				titoloannuncio.ranking = titoloannuncio.ranking - 20
-			#parole buone
-			if titoloannuncio.find('funziona') == -1 or titoloannuncio.find('ram') == -1 or titoloannuncio.find('nuovo') == -1:
-				titoloannuncio.ranking = titoloannuncio.ranking + 10
-			if titoloannuncio.find('sigillato') == -1
-		
-			#DA FINIRE
-			#HO IL CUORE A META, GIA ALLA MIA ETA.
-						
-			
-			
-		except IndexError, Exception:
-		
+                annuncii = x
 
+
+        #strippare prezzi e creare array per tutti i fattori dell'annuncio
+        #.split per fare arrays
+        prezzikijii = prezzikiji.replace("€", "")
+        prezzikijij = prezzikijii.replace(" ", "")
+        prezzikijijii = prezzikijij.replace(".", "")
+        prezzikijiji = prezzikijijii.split(';')
+        titolokijiji = prezzikiji.split(';')
+        postokijiji = postokiji.split(';')
+        orarikijiji = orarikiji.split(';')
+
+        #mettere tutto piu array
+        #indice di credibilita
+        #fare la media
+        #confronta media usato con media nuovo e prendi 10 annunci credibili
+        #contronta quelli
+        #ouputta il migliore
+        #bella grafica e
+        outputt = ''
+        for x in titolokijiji:
+            outputt += x
+        return outputt
 
 if __name__ == '__main__':
     app.debug = True
