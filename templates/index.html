@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Deend Search</title>
+  
+  
+  
+      <style>
+      @import url(https://fonts.googleapis.com/css?family=Exo:100,200,400);
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:700,400,300);
+
+body{
+	margin: 0;
+	padding: 0;
+	background: #fff;
+
+	color: #fff;
+	font-family: Arial;
+	font-size: 12px;
+}
+
+.body{
+	position: absolute;
+	top: -20px;
+	left: -20px;
+	right: -40px;
+	bottom: -40px;
+	width: auto;
+	height: auto;
+	background-image: url(http://ginva.com/wp-content/uploads/2012/07/city-skyline-wallpapers-008.jpg);
+	background-size: cover;
+	-webkit-filter: blur(5px);
+	z-index: 0;
+}
+
+.grad{
+	position: absolute;
+	top: -20px;
+	left: -20px;
+	right: -40px;
+	bottom: -40px;
+	width: auto;
+	height: auto;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.65))); /* Chrome,Safari4+ */
+	z-index: 1;
+	opacity: 0.7;
+}
+
+.header{
+	position: absolute;
+	top: calc(50% - 35px);
+	left: calc(50% - 255px);
+	z-index: 2;
+}
+.nuovo{
+	position: absolute;
+	top: calc(10% - 45px);
+	z-index: 2;
+}
+.nuovo_p{
+	position:absolute;
+	top: calc(20% - 30px);
+	z-index : 2;
+}
+#nuovoHead{
+	width: 110vw;
+	background: transparent;
+	color: #000000;
+	font-family: 'Exo', sans-serif;
+	font-size: 50px;
+	font-weight: 400;
+	padding: 4px;
+	text-align: center;
+}
+#nuovoP{
+	width: 110vw;
+	background: transparent;
+	color: #000000;
+	font-family: 'Exo', sans-serif;
+	font-size: 25px;
+	font-weight: 400;
+	padding: 4px;
+	text-align: center;
+}
+.header div{
+	float: left;
+	color: #fff;
+	font-family: 'Exo', sans-serif;
+	font-size: 35px;
+	font-weight: 200;
+}
+
+.header div span{
+	color: #5379fa !important;
+}
+
+.login{
+	position: absolute;
+	top: calc(50% - 75px);
+	left: calc(50% - 50px);
+	height: 150px;
+	width: 350px;
+	padding: 10px;
+	z-index: 2;
+}
+
+.login input[type=text]{
+	width: 250px;
+	height: 30px;
+	background: transparent;
+	border: 1px solid rgba(255,255,255,0.6);
+	border-radius: 2px;
+	color: #fff;
+	font-family: 'Exo', sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	padding: 4px;
+}
+
+.login select{
+	width: 250px;
+	height: 30px;
+	background: transparent;
+	border: 1px solid rgba(255,255,255,0.6);
+	border-radius: 2px;
+	font-family: 'Exo', sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	padding: 4px;
+	margin-top: 10px;
+}
+
+.login input[type=button]{
+	width: 260px;
+	height: 35px;
+	background: #fff;
+	border: 1px solid #fff;
+	cursor: pointer;
+	border-radius: 2px;
+	color: #a18d6c;
+	font-family: 'Exo', sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	padding: 6px;
+	margin-top: 10px;
+}
+
+.login input[type=button]:hover{
+	opacity: 0.8;
+}
+
+.login input[type=button]:active{
+	opacity: 0.6;
+}
+
+.login input[type=text]:focus{
+	outline: none;
+	border: 1px solid rgba(255,255,255,0.9);
+}
+
+.login input[type=password]:focus{
+	outline: none;
+	border: 1px solid rgba(255,255,255,0.9);
+}
+
+.login input[type=button]:focus{
+	outline: none;
+}
+
+::-webkit-input-placeholder{
+   color: rgba(255,255,255,0.6);
+}
+
+::-moz-input-placeholder{
+   color: rgba(255,255,255,0.6);
+}
+
+
+    </style>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+<script
+  src="https://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous"></script>
+</head>
+<div class="homepage-hero-module">
+    <div class="video-container">
+        <div class="filter"></div>
+        <video autoplay loop class="fillWidth">
+            <source src="mp3.mp4" type="video/webm" />Your browser does not support the video tag. I suggest you upgrade your browser.
+        </video>
+
+    </div>
+</div>
+<body>
+  <div class="body"></div>
+		<div class="grad"></div>
+		<div class="nuovo">
+		<p id="nuovoHead"> Confronta l'elettronica usata! </p>
+		</div>
+		<div class="nuovo_p">
+		<p id="nuovoP"> Benvenuto! Cerca su Deend  l'elettronica migliore di Oggi! <br />
+		L'algoritmo cerca su Subito.it e su Kijiji.it e confronta gli annunci migliori! <br />
+		Inizia a cercare oggi su DeendSearch! Questo sito è ancora in Alpha! <br />
+		Se trovi Bugs o hai suggerimenti scrivi a info@deendsearch.com <br /> </p>
+		</div>
+		<div class="header">
+			<div>Deend<span>Search</span> <br /></div>
+		</div>
+
+		<br>
+		<div class="login">
+				<input type="text" placeholder="Cerca" name="ricerca"><br>
+				<select>
+				<option value='none' name='none' id='lool'> Scegli un'opzione </option>
+				<option value='annunci-friuli-venezia' name='annunci-friuli-venezia'> Friuli Venezia Giulia</option>
+				<option value='annunci-lombardia' name='annunci-lombardia'> Lombardia </option>
+				<option value='annunci-veneto' name='annunci-veneto'> Veneto </option>
+				<option value='annunci-trentino-alto-adige' name='annunci-trentino-alto-adige'> Trentino Alto Adige</option>
+				<option value='annunci-piemonte' name='annunci-piemonte'> Piemonte </option>
+				<option value='annunci-valle-d-aosta' name='annunci-valle-d-aosta'> Valle d'Aosta</option>
+				<option value='annunci-liguria' name='annunci-liguria'>  Liguria </option>
+				<option value='annunci-emilia-romagna' name='annunci-emilia-romagna'> Emilia Romagna </option>
+				<option value='annunci-toscana' name='annunci-toscana'> Toscana </option>
+				<option value='annunci-marche' name='annunci-marche'> Marche </option>
+				<option value='annunci-umbria' name='annunci-umbria'>  Umbria </option>
+				<option value='annunci-lazio' name='annunci-lazio'> Lazio </option>
+				<option value='annunci-abruzzo' name='annunci-abruzzo'> Abruzzo </option>
+				<option value='annunci-molise' name='annunci-molise'> Molise </option>
+				<option value='annunci-puglia' name='annunci-puglia'> Puglia </option>
+				<option value='annunci-campania' name='annunci-campania'>  Campania </option>
+				<option value='annunci-basilicata' name='annunci-basilicata'> Basilicata </option>
+				<option value='annunci-calabria' name='annunci-calabria'> Calabria </option>
+				<option value='annunci-sicilia' name='annunci-sicilia'> Sicilia </option>
+				<option value='annunci-sardegna' name='annunci-sardegna'>  Sardegna </option>
+				<select>
+				<input type="button" value="Cerca">
+		</div>
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+  
+</body>
+</html>
